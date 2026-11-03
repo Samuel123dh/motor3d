@@ -592,4 +592,14 @@ export function initAllMotors() {
   });
 
   // Hero
-  const heroEl = document.getElementById
+  const heroEl = document.getElementById('hero-canvas');
+  if (heroEl) {
+    const heroController = createScene(heroEl, 'L4');
+    if (heroController) {
+      registry.set('HERO', heroController);
+      heroController.controls.enablePan = false;
+      heroController.controls.autoRotate = true;
+      heroController.controls.autoRotateSpeed = 0.6;
+    }
+  }
+}
