@@ -448,7 +448,8 @@ function createScene(canvasEl, id) {
   scene.background = new THREE.Color(0x0b0d10);
 
   const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-  camera.position.set(6, 5, 8);
+  // AFastando a câmera para ver o motor inteiro
+  camera.position.set(10, 8, 14); 
   camera.lookAt(0, 0, 0);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -457,23 +458,26 @@ function createScene(canvasEl, id) {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.1;
+  renderer.toneMappingExposure = 1.2;
   container.appendChild(renderer.domElement);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  // Aumentando a luz ambiente (antes estava 0.5)
+  scene.add(new THREE.AmbientLight(0xffffff, 1.5));
 
-  const keyLight = new THREE.DirectionalLight(0xffe0c0, 1.7);
-  keyLight.position.set(5, 8, 6);
+  // Luz principal mais forte
+  const keyLight = new THREE.DirectionalLight(0xffe0c0, 2.5);
+  keyLight.position.set(10, 15, 10);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(1024, 1024);
   scene.add(keyLight);
 
-  const rimLight = new THREE.DirectionalLight(0xff4b1f, 1.0);
-  rimLight.position.set(-6, 4, -4);
+  // Luz de recorte
+  const rimLight = new THREE.DirectionalLight(0xff4b1f, 2.0);
+  rimLight.position.set(-10, 5, -10);
   scene.add(rimLight);
 
-  const fill = new THREE.PointLight(0x88aaff, 0.5, 20);
-  fill.position.set(0, 3, 5);
+  const fill = new THREE.PointLight(0x88aaff, 1.5, 30);
+  fill.position.set(0, 5, 5);
   scene.add(fill);
 
   const grid = new THREE.GridHelper(20, 20, 0x2a2e37, 0x1a1d22);
@@ -501,7 +505,7 @@ function createScene(canvasEl, id) {
   controls.dampingFactor = 0.08;
   controls.rotateSpeed = 0.8;
   controls.minDistance = 3;
-  controls.maxDistance = 22;
+  controls.maxDistance = 30; // Aumentei o limite de zoom
   controls.target.set(0, 0, 0);
   controls.update();
 
@@ -544,7 +548,7 @@ function buildControlButtons(targetId, controller) {
     { label: '▶ Play', action: () => { controller.state.running = true; setActive(0); } },
     { label: '⏸ Pause', action: () => { controller.state.running = false; setActive(1); } },
     { label: '⟲ Reiniciar', action: () => { controller.state.time = 0; controller.state.running = true; controller.animator.update(0, 0); setActive(0); } },
-    { label: '⌂ Reset Câmera', action: () => { controller.camera.position.set(6, 5, 8); controller.controls.target.set(0, 0, 0); controller.controls.update(); } },
+    { label: '⌂ Reset Câmera', action: () => { controller.camera.position.set(10, 8, 14); controller.controls.target.set(0, 0, 0); controller.controls.update(); } },
   ];
 
   function setActive(i) {
