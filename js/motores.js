@@ -448,7 +448,7 @@ function createScene(canvasEl, id) {
   scene.background = new THREE.Color(0x0b0d10);
 
   const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-  // AFastando a câmera para ver o motor inteiro
+  // Afastando a câmera para ver o motor inteiro
   camera.position.set(10, 8, 14); 
   camera.lookAt(0, 0, 0);
 
@@ -461,8 +461,11 @@ function createScene(canvasEl, id) {
   renderer.toneMappingExposure = 1.2;
   container.appendChild(renderer.domElement);
 
-  // Aumentando a luz ambiente (antes estava 0.5)
+  // Aumentando a luz ambiente
   scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+  
+  // Luz de estúdio total (Hemisfério) para iluminar tudo
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 2.0));
 
   // Luz principal mais forte
   const keyLight = new THREE.DirectionalLight(0xffe0c0, 2.5);
